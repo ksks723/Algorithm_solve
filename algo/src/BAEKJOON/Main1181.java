@@ -3,42 +3,39 @@ package BAEKJOON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Main1181 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
-        int number = Integer.parseInt(re.readLine());
-        ArrayList<String> list = new ArrayList<String>();
-        for (int i = 0; i < number; i++) {
-            list.add(re.readLine());
+
+    public static void main(String args[]) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int num = Integer.parseInt(br.readLine());
+
+        String[] arr = new String[num];
+
+        for(int i =  0 ; i < num ; i++) {
+            arr[i] = br.readLine();
         }
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if (list.get(i).length() > list.get(j).length()) {
-                    String k = list.get(i);
-                    list.add(i,list.get(j));
-                    list.add(j,k);
+
+        Arrays.sort(arr, new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                if(s1.length() == s2.length()) {
+                    return s1.compareTo(s2);
+                }else {
+                    return s1.length() - s2.length();
                 }
-                if (list.get(i).length() == list.get(j).length()) {
-                    if (compareStrings(list.get(i), list.get(j)) > 0) {
-                        String k = list.get(i);
-                        list.add(i,list.get(j));
-                        list.add(j,k);
-                    }
-                }
-                if (compareStrings(list.get(i), list.get(j)) == 0) {
-                    list.remove(i);
-                }
+
+            }
+        });
+
+        System.out.println(arr[0]);
+        for(int i = 1; i < num; i++) {
+            if (!arr[i].equals(arr[i - 1])) {
+                System.out.println(arr[i]);
             }
         }
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
-    }
-
-    public static int compareStrings(String s1, String s2) {
-        int comparedResult = s1.compareTo(s2);
-        return comparedResult;
     }
 }
